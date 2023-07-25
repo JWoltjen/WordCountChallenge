@@ -40,8 +40,13 @@ is a valid word."
 
         static void Main(string[] args)
         {
-
-
+            TextPrinter printer = new TextPrinter();
+            foreach(string test in tests)
+            {
+                TextAnalyzer analyzer = new TextAnalyzer(test);
+                printer.PrintResults(analyzer);
+            }
+            Console.ReadLine();
         }
     }
 
@@ -84,6 +89,19 @@ is a valid word."
         public char FindMostUsedCharacter()
         {
             return text.GroupBy(c => c).OrderByDescending(g => g.Count()).First().Key;
+        }
+    }
+
+    class TextPrinter
+    {
+        public void PrintResults(TextAnalyzer analyzer)
+        {
+            Console.WriteLine($"Total Words: {analyzer.CountWords()}");
+            Console.WriteLine($"Total Characters: {analyzer.CountTotalCharacters()}");
+            Console.WriteLine($"Character count (minus line returns and spaces): {analyzer.CountCharactersExcludingWhitespace()}");
+            Console.WriteLine($"Most used word: {analyzer.FindMostUsedWord()}");
+            Console.WriteLine($"Most used character: {analyzer.FindMostUsedCharacter()}");
+            Console.WriteLine();
         }
     }
 }
