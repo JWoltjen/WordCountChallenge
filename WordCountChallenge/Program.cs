@@ -127,12 +127,17 @@ is a valid word."
         {
             var (mostUsedWord, count) = analyzer.FindMostUsedWord();
             var (mostUsedChar, charcount) = analyzer.FindMostUsedCharacter();
+            var (mostUsedCharacter, charCount) = analyzer.FindMostUsedAlphaCharacter();
 
             Console.WriteLine($"Total Words: {analyzer.CountWords()}");
             Console.WriteLine($"Total Characters: {analyzer.CountTotalCharacters()}");
             Console.WriteLine($"Character count (minus line returns and spaces): {analyzer.CountCharactersExcludingWhitespace()}");
+            Console.WriteLine($"Unique Words: {string.Join(", ", analyzer.GetUniqueWords())}");
+            Console.WriteLine($"Unique Alpha Characters: {string.Join(", ", analyzer.GetUniqueAlphaCharacters())}");
             Console.WriteLine($"Most used word: {mostUsedWord} (used {count} times)");
             Console.WriteLine($"Most used character: {mostUsedChar} (used {charcount} times)");
+            Console.WriteLine($"Most used alpha character: {mostUsedCharacter} (used {charCount} times)");
+
             Console.WriteLine();
         }
     }
