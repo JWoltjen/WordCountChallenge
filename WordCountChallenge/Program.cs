@@ -81,14 +81,16 @@ is a valid word."
             return words.Length;
         }
 
-        public string FindMostUsedWord()
+        public (string word, int count) FindMostUsedWord()
         {
-            return words.GroupBy(w => w).OrderByDescending(g => g.Count()).First().Key;
+            var mostUsedWordGroup = words.GroupBy(w => w).OrderByDescending(g => g.Count()).First();
+            return (mostUsedWordGroup.Key, mostUsedWordGroup.Count());
         }
 
-        public char FindMostUsedCharacter()
+        public (char c, int count) FindMostUsedCharacter()
         {
-            return text.GroupBy(c => c).OrderByDescending(g => g.Count()).First().Key;
+            var mostUsedChar = text.GroupBy(c => c).OrderByDescending(g => g.Count()).First();
+            return (mostUsedChar.Key, mostUsedChar.Count());
         }
     }
 
