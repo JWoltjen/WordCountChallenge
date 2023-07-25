@@ -81,6 +81,16 @@ is a valid word."
             return words.Length;
         }
 
+        public List<string> GetUniqueWords()
+        {
+            return words.Distinct().ToList();
+        }
+
+        public List<char> GetUniqueAlphaCharacters()
+        {
+            return text.Where(char.IsLetter).Distinct().ToList();
+        }
+
         public (string word, int count) FindMostUsedWord()
         {
             var mostUsedWord = words.Where(w => !string.IsNullOrWhiteSpace(w))
@@ -98,6 +108,16 @@ is a valid word."
                                     g.Count()).First();
 
             return (mostUsedChar.Key, mostUsedChar.Count());
+        }
+
+        public (char character, int count) FindMostUsedAlphaCharacter()
+        {
+            var mostUsedCharacter = text.Where(char.IsLetter)
+                                        .GroupBy(c => c)
+                                        .OrderByDescending(g => g.Count())
+                                        .First();
+
+            return (mostUsedCharacter.Key, mostUsedCharacter.Count());
         }
     }
 
