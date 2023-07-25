@@ -83,13 +83,16 @@ is a valid word."
 
         public (string word, int count) FindMostUsedWord()
         {
-            var mostUsedWordGroup = words.GroupBy(w => w).OrderByDescending(g => g.Count()).First();
-            return (mostUsedWordGroup.Key, mostUsedWordGroup.Count());
+            var mostUsedWord = words.Where(w => !string.IsNullOrWhiteSpace(w))
+                                    .GroupBy(w => w).OrderByDescending(g =>                       g.Count()).First();
+            return (mostUsedWord.Key, mostUsedWord.Count());
         }
 
         public (char c, int count) FindMostUsedCharacter()
         {
-            var mostUsedChar = text.GroupBy(c => c).OrderByDescending(g => g.Count()).First();
+            var mostUsedChar = text.Where(c => !char.IsWhiteSpace(c)).
+                                    GroupBy(c => c).OrderByDescending(g =>      
+                                    g.Count()).First();
             return (mostUsedChar.Key, mostUsedChar.Count());
         }
     }
@@ -98,11 +101,14 @@ is a valid word."
     {
         public void PrintResults(TextAnalyzer analyzer)
         {
+            var (mostUsedWord, count) = analyzer.FindMostUsedWord();
+            var (mostUsedChar, charcount) = analyzer.FindMostUsedCharacter();
+
             Console.WriteLine($"Total Words: {analyzer.CountWords()}");
             Console.WriteLine($"Total Characters: {analyzer.CountTotalCharacters()}");
             Console.WriteLine($"Character count (minus line returns and spaces): {analyzer.CountCharactersExcludingWhitespace()}");
-            Console.WriteLine($"Most used word: {analyzer.FindMostUsedWord()}");
-            Console.WriteLine($"Most used character: {analyzer.FindMostUsedCharacter()}");
+            Console.WriteLine($"Most used word: {mostUsedWord} (used {count} times)");
+            Console.WriteLine($"Most used character: {mostUsedChar} (used {charcount} times)");
             Console.WriteLine();
         }
     }
