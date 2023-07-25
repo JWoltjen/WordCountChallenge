@@ -68,7 +68,7 @@ is a valid word."
 
         public int CountTotalCharacters()
         {
-            return text.Length;
+            return text.Replace("\r\n", "\n").Length;
         }
 
         public int CountCharactersExcludingWhitespace()
@@ -84,7 +84,10 @@ is a valid word."
         public (string word, int count) FindMostUsedWord()
         {
             var mostUsedWord = words.Where(w => !string.IsNullOrWhiteSpace(w))
-                                    .GroupBy(w => w).OrderByDescending(g =>                       g.Count()).First();
+                                    .Select(w => w.ToLower())
+                                    .GroupBy(w => w).OrderByDescending(g =>                       
+                                    g.Count()).First();
+
             return (mostUsedWord.Key, mostUsedWord.Count());
         }
 
@@ -93,6 +96,7 @@ is a valid word."
             var mostUsedChar = text.Where(c => !char.IsWhiteSpace(c)).
                                     GroupBy(c => c).OrderByDescending(g =>      
                                     g.Count()).First();
+
             return (mostUsedChar.Key, mostUsedChar.Count());
         }
     }
